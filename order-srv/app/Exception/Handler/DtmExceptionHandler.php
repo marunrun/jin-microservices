@@ -28,13 +28,17 @@ use Throwable;
  */
 class DtmExceptionHandler extends ExceptionHandler
 {
-    /**
-     * @var StdoutLoggerInterface
-     */
-    protected $logger;
 
+
+    public function __construct(protected StdoutLoggerInterface $logger)
+    {
+    }
     public function handle(Throwable $throwable, ResponseInterface $response)
     {
+
+
+        $this->logger->error(sprintf('%s[%s] in %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile()));
+        $this->logger->error($throwable->getTraceAsString());
 
         if ($throwable instanceof ServiceException) {
 
@@ -43,7 +47,8 @@ class DtmExceptionHandler extends ExceptionHandler
 
             return $response->withStatus(409);
         }
-
+        $this->logger->error(sprintf('%s[%s] in %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile()));
+        $this->logger->error($throwable->getTraceAsString());
         // 交给下一个异常处理器
         return $response;
     }

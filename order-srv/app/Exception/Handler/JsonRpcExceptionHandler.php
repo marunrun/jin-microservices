@@ -27,14 +27,16 @@ use Throwable;
  */
 class JsonRpcExceptionHandler extends ExceptionHandler
 {
-    /**
-     * @var StdoutLoggerInterface
-     */
-    protected $logger;
+
+    public function __construct(protected StdoutLoggerInterface $logger)
+    {
+    }
 
     public function handle(Throwable $throwable, ResponseInterface $response)
     {
 
+        $this->logger->error(sprintf('%s[%s] in %s', $throwable->getMessage(), $throwable->getLine(), $throwable->getFile()));
+        $this->logger->error($throwable->getTraceAsString());
         if ($throwable instanceof JsonRpcException) {
 
 

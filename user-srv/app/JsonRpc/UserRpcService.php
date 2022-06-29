@@ -7,6 +7,7 @@
 
 namespace App\JsonRpc;
 
+use App\Log;
 use Hyperf\RpcServer\Annotation\RpcService;
 use App\Services\UserService;
 use Hyperf\Di\Annotation\Inject;
@@ -57,6 +58,10 @@ class UserRpcService implements UserRpcServiceInterface
      */
     public function userStoredList(int $page, int $pageSize): array
     {
+        Log::get()->info("rpc userStoredList ",[
+            'page' => $page,
+            'pageSize' => $pageSize
+        ]);
         return [
             'code' => 200,
             'data' => $this->userService->userStoredList($page, $pageSize)

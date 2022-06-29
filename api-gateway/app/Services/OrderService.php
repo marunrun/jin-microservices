@@ -43,6 +43,10 @@ class OrderService
                 'message' => $ex->getMessage(),
             ]);
 
+            Log::get()->error($ex->getMessage(),[
+                'trace' => $ex->getTrace()
+            ]);
+
             throw new ServiceException(430);
         }
 

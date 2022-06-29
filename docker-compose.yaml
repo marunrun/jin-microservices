@@ -11,7 +11,7 @@ services:
       - 9502:9502
       - 9503:9503
     volumes:
-      - /Users/linjinjin/Documents/dnmp/www:/data/www
+      - ./:/data/www
     tty: true
     networks:
       - hyperf_networks

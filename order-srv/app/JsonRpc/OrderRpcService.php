@@ -7,6 +7,7 @@
 
 namespace App\JsonRpc;
 
+use App\Log;
 use Hyperf\RpcServer\Annotation\RpcService;
 use App\Services\OrderService;
 use Hyperf\Di\Annotation\Inject;
@@ -33,6 +34,9 @@ class OrderRpcService implements OrderRpcServiceInterface
      */
     public function orderList(int $userId): array
     {
+        Log::get()->info("orderList rpc调用",[
+            "uid" => $userId
+        ]);
         return [
             'code' => 200,
             'data' => $this->orderService->orderList($userId)
